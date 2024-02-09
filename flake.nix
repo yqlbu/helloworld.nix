@@ -6,7 +6,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     flake-utils.lib.eachSystem [ "x86_64-linux" ] (system:
       let
         pkgs = (import nixpkgs) { inherit system; };
@@ -25,7 +25,7 @@
         # define output packages
         packages = {
           default = self.packages.${system}.${packageName};
-          vim = pacakges.legacyPackages.${system}.vim;
+          vim = nixpkgs.legacyPackages.${system}.vim;
         };
 
         # dev environment
